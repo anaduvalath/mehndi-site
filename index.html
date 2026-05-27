@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehndi by Ameya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm: #f0e8d8;
+    --brown: #3d2b1f;
+    --rust: #b05a2f;
+    --rust-light: #d4845a;
+    --muted: #8a7060;
+    --border: #ddd0c0;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  nav.scrolled { border-bottom-color: var(--border); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--brown);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--brown); }
+
+  .nav-book {
+    padding: 10px 24px;
+    background: var(--brown);
+    color: var(--cream) !important;
+    border-radius: 4px;
+    transition: background 0.2s !important;
+  }
+
+  .nav-book:hover { background: var(--rust); color: var(--cream); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 100px 48px 60px;
+    gap: 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .hero-text { padding-top: 40px; }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--brown);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.8s ease forwards 0.35s;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust);
+    display: block;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 420px;
+    font-weight: 300;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.8s ease forwards 0.65s;
+  }
+
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--brown);
+    color: var(--cream);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: var(--rust); transform: translateY(-1px); }
+
+  .btn-ghost {
+    padding: 14px 32px;
+    border: 1px solid var(--border);
+    color: var(--brown);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: border-color 0.2s, transform 0.1s;
+  }
+
+  .btn-ghost:hover { border-color: var(--rust-light); transform: translateY(-1px); }
+
+  /* HERO IMAGE COLLAGE */
+  .hero-visual {
+    position: relative;
+    height: 580px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.4s;
+  }
+
+  .img-placeholder {
+    position: absolute;
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .img-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .img-placeholder .placeholder-text {
+    text-align: center;
+    color: var(--muted);
+  }
+
+  .placeholder-text span {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .placeholder-text .icon {
+    font-size: 28px;
+    opacity: 0.4;
+  }
+
+  .img-main {
+    width: 72%;
+    height: 78%;
+    top: 0; right: 0;
+  }
+
+  .img-accent {
+    width: 44%;
+    height: 44%;
+    bottom: 0; left: 0;
+    border: 3px solid var(--cream);
+  }
+
+  .img-tag {
+    position: absolute;
+    bottom: 44%;
+    right: 26%;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 8px 16px;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    font-weight: 300;
+  }
+
+  .img-tag strong {
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--warm);
+    overflow: hidden;
+    padding: 14px 0;
+  }
+
+  .marquee-inner {
+    display: flex;
+    gap: 0;
+    animation: marquee 28s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-inner:hover { animation-play-state: paused; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .marquee-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--rust-light);
+    flex-shrink: 0;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+    height: 420px;
+  }
+
+  .about-img-main {
+    width: 80%;
+    height: 90%;
+    bottom: 0; left: 0;
+  }
+
+  .about-img-accent {
+    width: 48%;
+    height: 50%;
+    top: 0; right: 0;
+    border: 3px solid var(--cream);
+  }
+
+  .about-text .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .about-text h2 em { font-style: italic; color: var(--rust); }
+
+  .about-text p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--rust);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    margin-top: 8px;
+    transition: gap 0.2s;
+  }
+
+  .about-link:hover { gap: 12px; }
+
+  /* SERVICES */
+  .services {
+    background: var(--brown);
+    padding: 90px 48px;
+  }
+
+  .services-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .services .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .services h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 48px;
+    line-height: 1.1;
+  }
+
+  .services h2 em { font-style: italic; color: var(--rust-light); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .service-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 28px 24px;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .service-card:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-3px);
+  }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--rust-light);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: rgba(250,247,242,0.55);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .service-price {
+    font-size: 13px;
+    color: var(--rust-light);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  /* GALLERY PREVIEW */
+  .gallery-preview {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 48px;
+  }
+
+  .gallery-preview .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 36px;
+  }
+
+  .gallery-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .gallery-header h2 em { font-style: italic; color: var(--rust); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 220px 220px;
+    gap: 12px;
+  }
+
+  .gallery-item {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  .gallery-item.tall {
+    grid-row: span 2;
+  }
+
+  .gallery-item .img-placeholder-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .gallery-view-all {
+    text-align: center;
+    margin-top: 36px;
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: var(--warm);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 48px;
+    text-align: center;
+  }
+
+  .cta-banner .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--brown);
+  }
+
+  .cta-banner h2 em { font-style: italic; color: var(--rust); }
+
+  .cta-banner p {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 36px;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--brown);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--rust); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; min-height: auto; gap: 40px; }
+    .hero-visual { height: 360px; }
+    .about-strip { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .about-visual { height: 300px; }
+    .services { padding: 60px 24px; }
+    .services-grid { grid-template-columns: 1fr; gap: 12px; }
+    .gallery-preview { padding: 60px 24px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+    .gallery-item.tall { grid-row: span 1; }
+    .cta-banner { padding: 60px 24px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Mehndi by Ameya</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="pages/gallery.html">Gallery</a></li>
+    <li><a href="pages/services.html">Services</a></li>
+    <li><a href="pages/about.html">About</a></li>
+    <li><a href="pages/booking.html" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Las Vegas · Henna Artist</p>
+    <h1>The art of<br><em>mehndi,</em><br>crafted for you</h1>
+    <p class="hero-desc">Bridal henna, party designs, and personal appointments — each piece hand-crafted with care and intention in Las Vegas.</p>
+    <div class="hero-ctas">
+      <a href="pages/booking.html" class="btn-primary">Book an Appointment</a>
+      <a href="pages/gallery.html" class="btn-ghost">View Gallery</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="img-placeholder img-main">
+      <!-- Replace src below with your own image e.g. images/hero-main.webp -->
+      <div class="placeholder-text">
+        <div class="icon">🪷</div>
+        <span>Add hero-main.webp</span>
+      </div>
+    </div>
+    <div class="img-placeholder img-accent">
+      <!-- Replace with images/hero-accent.webp -->
+      <div class="placeholder-text">
+        <div class="icon">✦</div>
+        <span>Add hero-accent.webp</span>
+      </div>
+    </div>
+    <div class="img-tag">Available in <strong>Las Vegas</strong></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="marquee-item">Bridal Mehndi <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Party Designs <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Individual Appointments <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Las Vegas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Traditional & Contemporary <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Henna Art <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Bridal Mehndi <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Party Designs <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Individual Appointments <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Las Vegas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Traditional & Contemporary <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Henna Art <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT STRIP -->
+<section class="about-strip">
+  <div class="about-visual">
+    <div class="img-placeholder about-img-main">
+      <!-- Replace with images/about-main.webp -->
+      <div class="placeholder-text">
+        <div class="icon">🪷</div>
+        <span>Add about-main.webp</span>
+      </div>
+    </div>
+    <div class="img-placeholder about-img-accent">
+      <!-- Replace with images/about-accent.webp -->
+      <div class="placeholder-text">
+        <div class="icon">✦</div>
+        <span>Add about-accent.webp</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-text">
+    <p class="eyebrow">About Ameya</p>
+    <h2>Rooted in tradition,<br><em>made personal</em></h2>
+    <p>Every design tells a story. I believe mehndi is more than decoration — it's a celebration of culture, love, and the moments that matter most.</p>
+    <p>Based in Las Vegas, I work with brides, families, and individuals to create henna that feels both timeless and uniquely yours.</p>
+    <a href="pages/about.html" class="about-link">Read my story →</a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="services-inner">
+    <p class="eyebrow">What I Offer</p>
+    <h2>Services &<br><em>Packages</em></h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">Bridal Mehndi</div>
+        <p class="service-desc">Full bridal application for hands and feet. Intricate traditional or contemporary designs tailored to your vision.</p>
+        <div class="service-price">Starting price — contact for quote</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">Party & Group</div>
+        <p class="service-desc">Perfect for mehendi nights, baby showers, birthdays, and events. Packages available for groups of all sizes.</p>
+        <div class="service-price">Starting price — contact for quote</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">Individual</div>
+        <p class="service-desc">A personal session for one — whether you want a small accent piece or a full hand design, all styles welcome.</p>
+        <div class="service-price">Starting price — contact for quote</div>
+      </div>
+    </div>
+    <div style="margin-top: 32px;">
+      <a href="pages/services.html" class="btn-ghost" style="color: var(--cream); border-color: rgba(255,255,255,0.2);">View Full Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY PREVIEW -->
+<section class="gallery-preview">
+  <p class="eyebrow">Portfolio</p>
+  <div class="gallery-header">
+    <h2>A glimpse of<br><em>my work</em></h2>
+    <a href="pages/gallery.html" class="about-link">View full gallery →</a>
+  </div>
+  <div class="gallery-grid">
+    <!-- Replace placeholder divs with <img> tags once you have your photos -->
+    <!-- Example: <img src="images/gallery-01.webp" alt="Bridal henna design"> -->
+    <div class="gallery-item tall"><div class="img-placeholder-inner">gallery-01.webp</div></div>
+    <div class="gallery-item"><div class="img-placeholder-inner">gallery-02.webp</div></div>
+    <div class="gallery-item"><div class="img-placeholder-inner">gallery-03.webp</div></div>
+    <div class="gallery-item"><div class="img-placeholder-inner">gallery-04.webp</div></div>
+    <div class="gallery-item"><div class="img-placeholder-inner">gallery-05.webp</div></div>
+    <div class="gallery-item"><div class="img-placeholder-inner">gallery-06.webp</div></div>
+    <div class="gallery-item"><div class="img-placeholder-inner">gallery-07.webp</div></div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <p class="eyebrow">Ready to book?</p>
+  <h2>Let's create something<br><em>beautiful together</em></h2>
+  <p>Whether it's your wedding day or a personal treat, I'd love to work with you. Reach out and let's get started.</p>
+  <a href="pages/booking.html" class="btn-primary">Book Your Appointment</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Mehndi by Ameya</div>
+  <ul class="footer-links">
+    <li><a href="pages/gallery.html">Gallery</a></li>
+    <li><a href="pages/services.html">Services</a></li>
+    <li><a href="pages/booking.html">Book</a></li>
+    <li><a href="pages/about.html">About</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Mehndi by Ameya · Las Vegas, NV</p>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book — Mehndi by Ameya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm: #f0e8d8;
+    --brown: #3d2b1f;
+    --rust: #b05a2f;
+    --rust-light: #d4845a;
+    --muted: #8a7060;
+    --border: #ddd0c0;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--brown);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--brown); }
+
+  /* HERO */
+  .hero {
+    padding: 140px 48px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 80px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--brown);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 480px;
+    font-weight: 300;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--rust-light);
+    margin: 40px 48px;
+    opacity: 0.5;
+  }
+
+  /* LAYOUT */
+  .booking-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* FORM SECTION */
+  .form-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--brown);
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 13px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--brown);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--rust-light);
+    box-shadow: 0 0 0 3px rgba(176, 90, 47, 0.08);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #c4b8ac;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7060' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+  }
+
+  /* POLICY CHECKBOX */
+  .policy-box {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+
+  .policy-box p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-weight: 300;
+  }
+
+  .policy-box strong {
+    color: var(--brown);
+    font-weight: 500;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin-top: 1px;
+    accent-color: var(--rust);
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  .checkbox-label {
+    font-size: 13px;
+    color: var(--brown);
+    line-height: 1.5;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  /* SUBMIT */
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--brown);
+    color: var(--cream);
+    border: none;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 8px;
+  }
+
+  .submit-btn:hover { background: var(--rust); }
+  .submit-btn:active { transform: scale(0.99); }
+
+  .form-note {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 12px;
+    font-weight: 300;
+  }
+
+  /* SUCCESS */
+  .success-msg {
+    display: none;
+    background: #f0f7f0;
+    border: 1px solid #b8d4b8;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .success-msg p {
+    font-size: 14px;
+    color: #3a6b3a;
+    line-height: 1.6;
+  }
+
+  /* CALENDLY SECTION */
+  .calendly-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--brown);
+  }
+
+  .calendly-wrap {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--white);
+    margin-top: 24px;
+  }
+
+  /* POLICIES STRIP */
+  .policies {
+    background: var(--warm);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+  }
+
+  .policies-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .policies h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: var(--brown);
+  }
+
+  .policies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .policy-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .policy-card-title {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .policy-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 28px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 110px 24px 40px; }
+    .divider { margin: 30px 24px; }
+    .booking-layout { grid-template-columns: 1fr; gap: 40px; padding: 0 24px 60px; }
+    .policies { padding: 32px 24px; }
+    .policies-grid { grid-template-columns: 1fr; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">Mehndi by Ameya</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="booking.html">Book</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Reservations</p>
+  <h1>Book your<br><em>appointment</em></h1>
+  <p class="hero-sub">Fill out the form below and select a time that works for you. I'll confirm your booking within 24 hours.</p>
+</section>
+
+<div class="divider"></div>
+
+<div class="booking-layout">
+
+  <!-- CONTACT FORM -->
+  <div class="form-section">
+    <h2>Your details</h2>
+    <p class="section-sub">Tell me a little about your event so I can prepare for your appointment.</p>
+
+    <form id="booking-form" action="https://formspree.io/f/mredoopp" method="POST">
+
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="(000) 000-0000" required>
+      </div>
+
+      <div class="form-group">
+        <label for="event-type">Event Type</label>
+        <select id="event-type" name="event_type" required>
+          <option value="" disabled selected>Select an event type</option>
+          <option value="bridal">Bridal</option>
+          <option value="party">Party / Group</option>
+          <option value="individual">Individual / Personal</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="preferred-date">Preferred Date</label>
+        <input type="date" id="preferred-date" name="preferred_date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" placeholder="Design preferences, location, number of people, any questions..."></textarea>
+      </div>
+
+      <div class="policy-box">
+        <p>Please read and confirm the following before submitting:</p>
+        <p><strong>Deposits:</strong> A non-refundable deposit is required to secure your booking. <strong>Cancellations:</strong> Cancellations made less than 48 hours before your appointment may forfeit the deposit. <strong>Patch Test:</strong> If you have sensitive skin, a patch test is recommended prior to your appointment.</p>
+        <label class="checkbox-row">
+          <input type="checkbox" name="policy_confirmed" id="policy" required>
+          <span class="checkbox-label">I have read and agree to the booking policies above.</span>
+        </label>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Booking Request</button>
+      <p class="form-note">You'll receive a confirmation email within 24 hours.</p>
+
+      <div class="success-msg" id="success-msg">
+        <p>✓ &nbsp;Thank you! Your request has been received. I'll be in touch within 24 hours to confirm your appointment.</p>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- CALENDLY -->
+  <div class="calendly-section">
+    <h2>Choose a time</h2>
+    <p class="section-sub">Select a slot that works for you. Your chosen time will be included in your booking confirmation.</p>
+    <div class="calendly-wrap">
+      <div class="calendly-inline-widget" data-url="https://calendly.com/a-naduvalath/30min" style="min-width:320px;height:700px;"></div>
+      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    </div>
+  </div>
+
+</div>
+
+<!-- POLICIES -->
+<section class="policies">
+  <div class="policies-inner">
+    <h3>Booking Policies</h3>
+    <div class="policies-grid">
+      <div class="policy-card">
+        <div class="policy-card-title">Deposit</div>
+        <p>A non-refundable deposit is required to secure all appointments. The remaining balance is due on the day of your session.</p>
+      </div>
+      <div class="policy-card">
+        <div class="policy-card-title">Cancellations</div>
+        <p>Please provide at least 48 hours notice for cancellations or rescheduling. Late cancellations may forfeit the deposit.</p>
+      </div>
+      <div class="policy-card">
+        <div class="policy-card-title">Skin & Aftercare</div>
+        <p>Avoid moisturizers before your appointment. Keep the paste on for at least 6–8 hours after application for best results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Mehndi by Ameya &nbsp;·&nbsp; Las Vegas, NV &nbsp;·&nbsp; All rights reserved
+</footer>
+
+<script>
+  const form = document.getElementById('booking-form');
+  const successMsg = document.getElementById('success-msg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.reset();
+        successMsg.style.display = 'block';
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        alert('Something went wrong. Please try again or contact me directly.');
+      }
+    } catch {
+      alert('Network error. Please check your connection and try again.');
+    }
+  });
+
+  const dateInput = document.getElementById('preferred-date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.setAttribute('min', today);
+</script>
+
+</body>
+</html>

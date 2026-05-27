@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Mehndi by Ameya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm: #f0e8d8;
+    --brown: #3d2b1f;
+    --rust: #b05a2f;
+    --rust-light: #d4845a;
+    --muted: #8a7060;
+    --border: #ddd0c0;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--brown); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(250,247,242,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.08em; color: var(--brown); text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+  .nav-book { padding: 10px 24px; background: var(--brown); color: var(--cream) !important; border-radius: 4px; transition: background 0.2s !important; }
+  .nav-book:hover { background: var(--rust) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 88vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 60px;
+    padding: 120px 48px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-visual {
+    position: relative;
+    height: 560px;
+  }
+
+  .img-placeholder {
+    position: absolute;
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    overflow: hidden;
+  }
+
+  .img-placeholder img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+  .ph-icon { font-size: 26px; opacity: 0.35; }
+
+  .img-main { width: 78%; height: 82%; top: 0; right: 0; }
+  .img-accent { width: 46%; height: 46%; bottom: 0; left: 0; border: 3px solid var(--cream); }
+
+  .hero-text .eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 16px;
+  }
+
+  .hero-text h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5.5vw, 72px);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .hero-text h1 em { font-style: italic; color: var(--rust); display: block; }
+
+  .hero-text p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 14px;
+    max-width: 440px;
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--brown);
+    padding: 48px;
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 20px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--rust-light);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: rgba(250,247,242,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* STORY */
+  .story {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .story-text .eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 16px;
+  }
+
+  .story-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 4vw, 48px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .story-text h2 em { font-style: italic; color: var(--rust); }
+
+  .story-text p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .story-visual {
+    position: relative;
+    height: 480px;
+    margin-top: 8px;
+  }
+
+  .story-img-main {
+    position: absolute;
+    width: 85%;
+    height: 88%;
+    top: 0; right: 0;
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    overflow: hidden;
+  }
+
+  .story-img-main img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+  .story-quote {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 58%;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 20px 16px;
+    box-shadow: 0 4px 24px rgba(61,43,31,0.07);
+  }
+
+  .story-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .story-quote cite {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* VALUES */
+  .values {
+    background: var(--warm);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 48px;
+  }
+
+  .values-inner { max-width: 1100px; margin: 0 auto; }
+
+  .values .eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 16px;
+  }
+
+  .values h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 4vw, 48px);
+    font-weight: 300;
+    margin-bottom: 44px;
+    line-height: 1.1;
+  }
+
+  .values h2 em { font-style: italic; color: var(--rust); }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .value-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 22px;
+  }
+
+  .value-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--rust-light);
+    opacity: 0.5;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .value-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--brown);
+    margin-bottom: 8px;
+  }
+
+  .value-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* SOCIAL */
+  .social-strip {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .social-text .eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 16px;
+  }
+
+  .social-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 3.5vw, 44px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .social-text h2 em { font-style: italic; color: var(--rust); }
+
+  .social-text p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .social-links { display: flex; flex-direction: column; gap: 12px; }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--brown);
+    font-size: 13px;
+    font-weight: 500;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .social-link:hover { border-color: var(--rust-light); transform: translateX(4px); }
+
+  .social-link-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .social-link-info { flex: 1; }
+  .social-link-handle { font-size: 11px; color: var(--muted); font-weight: 300; margin-top: 2px; }
+  .social-link-arrow { font-size: 14px; color: var(--muted); }
+
+  .contact-card {
+    background: var(--brown);
+    border-radius: 10px;
+    padding: 36px 32px;
+    color: var(--cream);
+  }
+
+  .contact-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+
+  .contact-card h3 em { font-style: italic; color: var(--rust-light); }
+
+  .contact-card p {
+    font-size: 13px;
+    color: rgba(250,247,242,0.55);
+    font-weight: 300;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .contact-items { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: rgba(250,247,242,0.8);
+    font-weight: 300;
+  }
+
+  .contact-item-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .btn-book-white {
+    display: block;
+    padding: 14px;
+    background: var(--rust);
+    color: var(--cream);
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+
+  .btn-book-white:hover { background: var(--rust-light); }
+
+  /* FOOTER */
+  footer { padding: 36px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--brown); }
+  .footer-copy { font-size: 12px; color: var(--muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 110px 24px 50px; min-height: auto; }
+    .hero-visual { height: 340px; }
+    .stats-strip { padding: 36px 24px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+    .story { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .story-visual { height: 360px; }
+    .values { padding: 60px 24px; }
+    .values-grid { grid-template-columns: 1fr; }
+    .social-strip { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">Mehndi by Ameya</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="booking.html" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-visual">
+    <div class="img-placeholder img-main">
+      <!-- Replace with: <img src="../images/about-hero.webp" alt="Ameya"> -->
+      <div class="ph-icon">🪷</div>
+      <span>about-hero.webp</span>
+    </div>
+    <div class="img-placeholder img-accent">
+      <!-- Replace with: <img src="../images/about-accent.webp" alt="Mehndi detail"> -->
+      <div class="ph-icon">✦</div>
+      <span>about-accent.webp</span>
+    </div>
+  </div>
+  <div class="hero-text">
+    <p class="eyebrow">Hello, I'm Ameya</p>
+    <h1>Henna artist,<br><em>Las Vegas</em></h1>
+    <p>I'm a mehndi artist based in Las Vegas with a passion for creating designs that celebrate culture, beauty, and the moments that matter most.</p>
+    <p>Every piece I create is crafted by hand with care — from intimate individual sessions to full bridal applications.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">—</div>
+      <div class="stat-label">Years of experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">—</div>
+      <div class="stat-label">Clients served</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">—</div>
+      <div class="stat-label">Bridal appointments</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">LV</div>
+      <div class="stat-label">Based in Las Vegas</div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story">
+  <div class="story-text">
+    <p class="eyebrow">My Story</p>
+    <h2>Where my love for<br><em>mehndi began</em></h2>
+    <p>Write your story here. Tell clients where your passion for mehndi comes from — maybe it started at a family celebration, or you were taught by someone special. Your story is what makes you unique.</p>
+    <p>Share how long you've been practicing, what styles you specialize in, and what you love most about the craft. Clients connect with authenticity.</p>
+    <p>You can also mention your background — are you self-taught? Did you study with a mentor? Any training or experience that's shaped your style is worth sharing here.</p>
+  </div>
+  <div class="story-visual">
+    <div class="story-img-main">
+      <!-- Replace with: <img src="../images/story-main.webp" alt="Ameya at work"> -->
+      <div class="ph-icon">🪷</div>
+      <span>story-main.webp</span>
+    </div>
+    <div class="story-quote">
+      <p>"Every design tells a story — and I'm honored to be part of yours."</p>
+      <cite>— Ameya</cite>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="values-inner">
+    <p class="eyebrow">What I stand for</p>
+    <h2>My approach to<br><em>every appointment</em></h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-num">01</div>
+        <div class="value-title">Natural ingredients</div>
+        <p class="value-desc">I use 100% natural henna paste with no harsh chemicals, additives, or black henna. Safe for all skin types.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">02</div>
+        <div class="value-title">Personal attention</div>
+        <p class="value-desc">Every client gets a consultation before we begin. I want to understand your vision before I pick up the cone.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">03</div>
+        <div class="value-title">Rooted in culture</div>
+        <p class="value-desc">Mehndi is a tradition I take seriously. I bring respect and intention to every design, whether traditional or contemporary.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL & CONTACT -->
+<section class="social-strip">
+  <div class="social-text">
+    <p class="eyebrow">Stay Connected</p>
+    <h2>Follow my<br><em>work</em></h2>
+    <p>See my latest designs, behind-the-scenes moments, and client work on social media. Tag me in your photos — I love seeing the stain results!</p>
+    <div class="social-links">
+      <a href="#" class="social-link">
+        <!-- Replace href with your real Instagram URL -->
+        <div class="social-link-icon">📸</div>
+        <div class="social-link-info">
+          <div>Instagram</div>
+          <div class="social-link-handle">@your_handle — add your handle here</div>
+        </div>
+        <span class="social-link-arrow">→</span>
+      </a>
+      <a href="#" class="social-link">
+        <!-- Replace href with your real TikTok URL -->
+        <div class="social-link-icon">🎵</div>
+        <div class="social-link-info">
+          <div>TikTok</div>
+          <div class="social-link-handle">@your_handle — add your handle here</div>
+        </div>
+        <span class="social-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <h3>Get in <em>touch</em></h3>
+    <p>Have a question before booking? I'm happy to help. Fill out the booking form or reach out directly.</p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        Las Vegas, Nevada
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📩</div>
+        Via booking form
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">⏱</div>
+        Response within 24 hours
+      </div>
+    </div>
+    <a href="booking.html" class="btn-book-white">Book an Appointment</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Mehndi by Ameya</div>
+  <p class="footer-copy">© 2026 Mehndi by Ameya · Las Vegas, NV</p>
+</footer>
+
+</body>
+</html>

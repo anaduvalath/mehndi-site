@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Mehndi by Ameya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm: #f0e8d8;
+    --brown: #3d2b1f;
+    --rust: #b05a2f;
+    --rust-light: #d4845a;
+    --muted: #8a7060;
+    --border: #ddd0c0;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--brown); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(250,247,242,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.08em; color: var(--brown); text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+  .nav-book { padding: 10px 24px; background: var(--brown); color: var(--cream) !important; border-radius: 4px; transition: background 0.2s !important; }
+  .nav-book:hover { background: var(--rust) !important; }
+
+  /* HERO */
+  .hero {
+    padding: 130px 48px 50px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+  }
+  .hero-left .eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); font-weight: 500; margin-bottom: 16px; }
+  .hero-left h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 6vw, 80px); font-weight: 300; line-height: 1.05; }
+  .hero-left h1 em { font-style: italic; color: var(--rust); }
+  .hero-right { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; max-width: 320px; text-align: right; }
+
+  /* FILTER TABS */
+  .filters {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px 36px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 9px 22px;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+  .filter-btn:hover { border-color: var(--rust-light); color: var(--brown); }
+  .filter-btn.active { background: var(--brown); border-color: var(--brown); color: var(--cream); }
+
+  /* GALLERY GRID */
+  .gallery-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+  .gallery-grid {
+    columns: 3;
+    column-gap: 14px;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 14px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--warm);
+    border: 1px solid var(--border);
+  }
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(61,43,31,0);
+    transition: background 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+  .gallery-item:hover .overlay { background: rgba(61,43,31,0.45); }
+  .overlay-tag {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: rgba(61,43,31,0.6);
+    padding: 5px 12px;
+    border-radius: 40px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s, transform 0.3s;
+    font-weight: 400;
+  }
+  .gallery-item:hover .overlay-tag { opacity: 1; transform: translateY(0); }
+
+  /* PLACEHOLDER TILES */
+  .img-placeholder {
+    width: 100%;
+    background: var(--warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    border-radius: 8px;
+  }
+  .img-placeholder .ph-icon { font-size: 24px; opacity: 0.35; }
+  .ph-tall { height: 340px; }
+  .ph-med { height: 240px; }
+  .ph-short { height: 180px; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(20,12,8,0.93);
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-img {
+    max-height: 85vh;
+    max-width: 85vw;
+    border-radius: 8px;
+    object-fit: contain;
+    display: block;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 24px; right: 32px;
+    font-size: 28px;
+    color: rgba(250,247,242,0.6);
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+    transition: color 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+  }
+  .lightbox-close:hover { color: var(--cream); }
+  .lightbox-prev, .lightbox-next {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(250,247,242,0.1);
+    border: 1px solid rgba(250,247,242,0.2);
+    color: var(--cream);
+    font-size: 20px;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .lightbox-prev:hover, .lightbox-next:hover { background: rgba(250,247,242,0.2); }
+  .lightbox-prev { left: 24px; }
+  .lightbox-next { right: 24px; }
+  .lightbox-counter { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 12px; color: rgba(250,247,242,0.45); letter-spacing: 0.1em; }
+
+  /* CTA */
+  .cta-strip {
+    background: var(--warm);
+    border-top: 1px solid var(--border);
+    padding: 70px 48px;
+    text-align: center;
+  }
+  .cta-strip h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 52px); font-weight: 300; margin-bottom: 16px; }
+  .cta-strip h2 em { font-style: italic; color: var(--rust); }
+  .cta-strip p { font-size: 14px; color: var(--muted); margin-bottom: 28px; font-weight: 300; }
+  .btn-primary { padding: 14px 32px; background: var(--brown); color: var(--cream); text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--rust); }
+
+  /* FOOTER */
+  footer { padding: 36px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; letter-spacing: 0.06em; color: var(--brown); }
+  .footer-copy { font-size: 12px; color: var(--muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { flex-direction: column; padding: 110px 24px 36px; align-items: flex-start; }
+    .hero-right { text-align: left; }
+    .filters { padding: 0 24px 28px; }
+    .gallery-wrap { padding: 0 24px 60px; }
+    .gallery-grid { columns: 2; }
+    .cta-strip { padding: 50px 24px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">Mehndi by Ameya</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="booking.html" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="eyebrow">Portfolio</p>
+    <h1>My<br><em>work</em></h1>
+  </div>
+  <p class="hero-right">A collection of bridal, party, and individual designs — each one crafted by hand with care and intention.</p>
+</section>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="bridal">Bridal</button>
+  <button class="filter-btn" data-filter="party">Party</button>
+  <button class="filter-btn" data-filter="individual">Individual</button>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-wrap">
+  <div class="gallery-grid" id="gallery-grid">
+
+    <!--
+      HOW TO ADD YOUR PHOTOS:
+      Replace each <div class="img-placeholder ..."> block with:
+      <img src="../images/your-photo.webp" alt="description">
+
+      Keep the data-category and data-src attributes on the parent .gallery-item div.
+      Example:
+      <div class="gallery-item" data-category="bridal" data-src="../images/bridal-01.webp">
+        <img src="../images/bridal-01.webp" alt="Bridal mehndi design">
+        <div class="overlay"><span class="overlay-tag">Bridal</span></div>
+      </div>
+    -->
+
+    <div class="gallery-item" data-category="bridal" data-src="">
+      <div class="img-placeholder ph-tall"><div class="ph-icon">🪷</div><span>bridal-01.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Bridal</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="individual" data-src="">
+      <div class="img-placeholder ph-med"><div class="ph-icon">✦</div><span>individual-01.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Individual</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="party" data-src="">
+      <div class="img-placeholder ph-short"><div class="ph-icon">✦</div><span>party-01.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Party</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="bridal" data-src="">
+      <div class="img-placeholder ph-med"><div class="ph-icon">🪷</div><span>bridal-02.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Bridal</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="party" data-src="">
+      <div class="img-placeholder ph-tall"><div class="ph-icon">✦</div><span>party-02.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Party</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="individual" data-src="">
+      <div class="img-placeholder ph-med"><div class="ph-icon">✦</div><span>individual-02.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Individual</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="bridal" data-src="">
+      <div class="img-placeholder ph-short"><div class="ph-icon">🪷</div><span>bridal-03.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Bridal</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="individual" data-src="">
+      <div class="img-placeholder ph-tall"><div class="ph-icon">✦</div><span>individual-03.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Individual</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="party" data-src="">
+      <div class="img-placeholder ph-med"><div class="ph-icon">✦</div><span>party-03.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Party</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="bridal" data-src="">
+      <div class="img-placeholder ph-med"><div class="ph-icon">🪷</div><span>bridal-04.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Bridal</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="individual" data-src="">
+      <div class="img-placeholder ph-short"><div class="ph-icon">✦</div><span>individual-04.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Individual</span></div>
+    </div>
+
+    <div class="gallery-item" data-category="party" data-src="">
+      <div class="img-placeholder ph-tall"><div class="ph-icon">✦</div><span>party-04.webp</span></div>
+      <div class="overlay"><span class="overlay-tag">Party</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lb-close">×</button>
+  <button class="lightbox-prev" id="lb-prev">‹</button>
+  <img class="lightbox-img" id="lb-img" src="" alt="Mehndi design">
+  <button class="lightbox-next" id="lb-next">›</button>
+  <div class="lightbox-counter" id="lb-counter"></div>
+</div>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <h2>Love what you see?<br><em>Let's work together</em></h2>
+  <p>Book your appointment and let's create something beautiful.</p>
+  <a href="booking.html" class="btn-primary">Book an Appointment</a>
+</section>
+
+<footer>
+  <div class="footer-logo">Mehndi by Ameya</div>
+  <p class="footer-copy">© 2026 Mehndi by Ameya · Las Vegas, NV</p>
+</footer>
+
+<script>
+  // FILTER
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.gallery-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      items.forEach(item => {
+        const show = filter === 'all' || item.dataset.category === filter;
+        item.style.display = show ? 'block' : 'none';
+      });
+    });
+  });
+
+  // LIGHTBOX
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCounter = document.getElementById('lb-counter');
+  let currentIndex = 0;
+  let visibleItems = [];
+
+  function openLightbox(index) {
+    visibleItems = [...items].filter(i => i.style.display !== 'none');
+    const src = visibleItems[index]?.dataset.src;
+    if (!src) return;
+    currentIndex = index;
+    lbImg.src = src;
+    lbCounter.textContent = `${index + 1} / ${visibleItems.length}`;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      visibleItems = [...items].filter(it => it.style.display !== 'none');
+      const visIndex = visibleItems.indexOf(item);
+      openLightbox(visIndex);
+    });
+  });
+
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lb-prev').addEventListener('click', () => {
+    openLightbox((currentIndex - 1 + visibleItems.length) % visibleItems.length);
+  });
+  document.getElementById('lb-next').addEventListener('click', () => {
+    openLightbox((currentIndex + 1) % visibleItems.length);
+  });
+
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+    if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+  });
+</script>
+
+</body>
+</html>
