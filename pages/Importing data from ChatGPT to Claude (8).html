@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pop-ups & events — mehndi by ameya</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm: #f0e8d8;
+    --warm2: #e8dcc8;
+    --brown-dark: #2a1f14;
+    --brown: #3d2b1f;
+    --rust: #b05a2f;
+    --rust-light: #d4845a;
+    --muted: #8a7060;
+    --dim: #c4b49a;
+    --border: #ddd0c0;
+    --border-dark: #4a3528;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    padding: 22px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 17px; font-weight: 400; font-style: italic;
+    color: var(--rust); text-decoration: none;
+  }
+
+  .nav-center {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-size: 10px; letter-spacing: 0.16em; color: var(--muted); font-weight: 400;
+  }
+
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+
+  .nav-links a {
+    font-size: 11px; letter-spacing: 0.1em; color: var(--muted);
+    text-decoration: none; transition: color 0.2s; font-weight: 400;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+
+  .nav-book {
+    padding: 9px 20px; border: 1px solid var(--rust);
+    border-radius: 2px; color: var(--rust) !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-book:hover { background: rgba(176,90,47,0.08) !important; }
+
+  /* LABEL */
+  .label {
+    font-size: 9px; letter-spacing: 0.2em; color: var(--rust);
+    font-weight: 500; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .label::before {
+    content: ''; width: 14px; height: 1px;
+    background: var(--rust); opacity: 0.5;
+  }
+
+  .label-light {
+    font-size: 9px; letter-spacing: 0.2em; color: var(--rust-light);
+    font-weight: 500; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .label-light::before {
+    content: ''; width: 14px; height: 1px;
+    background: var(--rust-light); opacity: 0.6;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 70vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    padding-top: 88px;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 72px 56px;
+    border-right: 1px solid var(--border);
+  }
+
+  .hero-left h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(44px, 5.5vw, 80px);
+    font-weight: 400; font-style: italic;
+    line-height: 1.0; color: var(--rust);
+    margin-bottom: 24px;
+  }
+
+  .hero-left h1 em { font-style: normal; color: var(--brown); }
+
+  .hero-left p {
+    font-size: 13px; color: var(--muted); line-height: 1.85;
+    font-weight: 400; max-width: 380px; margin-bottom: 36px;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 13px 28px; background: var(--brown); color: var(--cream);
+    text-decoration: none; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; border-radius: 2px;
+    transition: background 0.2s; font-family: 'Syne', sans-serif;
+    align-self: flex-start;
+  }
+
+  .btn-primary:hover { background: var(--rust); }
+
+  .hero-right {
+    background: var(--warm);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px;
+    color: var(--dim); font-size: 10px; letter-spacing: 0.1em;
+    min-height: 400px;
+  }
+
+  .hero-right img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+  }
+
+  .hero-right .ph { font-size: 32px; opacity: 0.25; }
+
+  /* WHAT TO EXPECT — DARK */
+  .expect-section {
+    background: var(--brown-dark);
+    border-bottom: 1px solid var(--border-dark);
+  }
+
+  .expect-inner {
+    max-width: 1200px; margin: 0 auto; padding: 80px 48px;
+  }
+
+  .expect-inner h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-style: italic; font-weight: 400;
+    color: var(--rust-light); margin-bottom: 48px; line-height: 1.1;
+  }
+
+  .expect-inner h2 em { font-style: normal; color: var(--cream); }
+
+  .expect-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border-dark);
+  }
+
+  .expect-card {
+    padding: 32px 28px;
+    border-right: 1px solid var(--border-dark);
+    transition: background 0.2s;
+  }
+
+  .expect-card:last-child { border-right: none; }
+  .expect-card:hover { background: rgba(255,255,255,0.03); }
+
+  .expect-num {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 36px; font-style: italic; font-weight: 400;
+    color: var(--border-dark); line-height: 1; margin-bottom: 16px;
+  }
+
+  .expect-title {
+    font-size: 13px; font-weight: 500; color: var(--rust-light);
+    margin-bottom: 10px; letter-spacing: 0.04em;
+  }
+
+  .expect-desc {
+    font-size: 11px; color: rgba(250,247,242,0.45);
+    line-height: 1.85; font-weight: 400; letter-spacing: 0.02em;
+  }
+
+  /* PAST POPUPS */
+  .past-section {
+    max-width: 1200px; margin: 0 auto; padding: 96px 48px;
+  }
+
+  .past-section h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-style: italic; font-weight: 400;
+    color: var(--rust); margin-bottom: 44px; line-height: 1.1;
+  }
+
+  .past-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .past-card {
+    padding: 36px 36px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .past-card:last-child { border-right: none; }
+
+  .past-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .past-img {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 4/5;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    color: var(--dim); font-size: 9px; letter-spacing: 0.1em;
+  }
+
+  .past-img img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
+  }
+
+  .past-img .ph { font-size: 22px; opacity: 0.2; }
+
+  .past-info { display: flex; flex-direction: column; gap: 14px; }
+
+  .past-tag {
+    font-size: 9px; letter-spacing: 0.16em; color: var(--rust);
+    font-weight: 500; text-transform: uppercase;
+  }
+
+  .past-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 22px; font-style: italic; font-weight: 400;
+    color: var(--brown); line-height: 1.2;
+  }
+
+  .past-detail {
+    font-size: 11px; color: var(--muted); line-height: 1.8;
+    font-weight: 400; letter-spacing: 0.02em;
+  }
+
+  /* LOCATIONS STRIP */
+  .locations {
+    background: var(--warm);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 48px;
+  }
+
+  .locations-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; gap: 48px;
+  }
+
+  .locations-label {
+    font-size: 9px; letter-spacing: 0.2em; color: var(--rust);
+    font-weight: 500; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .locations-divider { width: 1px; height: 40px; background: var(--border); flex-shrink: 0; }
+
+  .location-list { display: flex; gap: 0; flex: 1; }
+
+  .location-item {
+    flex: 1; padding: 0 32px;
+    border-right: 1px solid var(--border);
+  }
+
+  .location-item:first-child { padding-left: 0; }
+  .location-item:last-child { border-right: none; }
+
+  .location-city {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 18px; font-style: italic; font-weight: 400;
+    color: var(--rust); margin-bottom: 4px;
+  }
+
+  .location-detail {
+    font-size: 11px; color: var(--muted);
+    font-weight: 400; letter-spacing: 0.04em; line-height: 1.6;
+  }
+
+  /* INQUIRY FORM */
+  .form-section {
+    max-width: 1200px; margin: 0 auto; padding: 96px 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--border);
+    margin-top: 80px; margin-bottom: 80px;
+  }
+
+  .form-left {
+    padding: 56px 48px;
+    background: var(--brown-dark);
+    border-right: 1px solid var(--border-dark);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .form-left h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-style: italic; font-weight: 400;
+    color: var(--rust-light); line-height: 1.1; margin-bottom: 16px;
+  }
+
+  .form-left h2 em { font-style: normal; color: var(--cream); }
+
+  .form-left p {
+    font-size: 12px; color: rgba(250,247,242,0.5);
+    line-height: 1.9; font-weight: 400; margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+
+  .form-details {
+    display: flex; flex-direction: column; gap: 12px;
+    font-size: 11px; color: rgba(250,247,242,0.4);
+    line-height: 1.7; font-weight: 400; letter-spacing: 0.03em;
+  }
+
+  .form-right { padding: 56px 48px; }
+
+  .form-group { margin-bottom: 18px; }
+
+  label {
+    display: block; font-size: 9px; letter-spacing: 0.14em;
+    color: var(--muted); font-weight: 500; margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%; padding: 12px 14px;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 2px; font-family: 'Syne', sans-serif;
+    font-size: 13px; color: var(--brown);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none; appearance: none; -webkit-appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--rust);
+    box-shadow: 0 0 0 3px rgba(176,90,47,0.06);
+  }
+
+  input::placeholder, textarea::placeholder { color: #c4b8ac; }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7060' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 40px; cursor: pointer;
+  }
+
+  textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+
+  .submit-btn {
+    width: 100%; padding: 14px;
+    background: var(--brown); color: var(--cream);
+    border: none; border-radius: 2px;
+    font-family: 'Syne', sans-serif; font-size: 11px;
+    font-weight: 500; letter-spacing: 0.1em;
+    cursor: pointer; transition: background 0.2s;
+    margin-top: 6px;
+  }
+
+  .submit-btn:hover { background: var(--rust); }
+
+  .form-note {
+    font-size: 11px; color: var(--muted); text-align: center;
+    margin-top: 10px; font-weight: 400;
+  }
+
+  .success-msg {
+    display: none; background: #f0f7f0;
+    border: 1px solid #b8d4b8; border-radius: 4px;
+    padding: 18px; text-align: center; margin-top: 14px;
+  }
+
+  .success-msg p { font-size: 13px; color: #3a6b3a; line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border); padding: 32px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--cream);
+  }
+
+  .footer-logo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px; font-style: italic; font-weight: 400;
+    color: var(--rust); text-decoration: none;
+  }
+
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+
+  .footer-links a {
+    font-size: 10px; letter-spacing: 0.1em; color: var(--muted);
+    text-decoration: none; transition: color 0.2s; font-weight: 400;
+  }
+
+  .footer-links a:hover { color: var(--brown); }
+  .footer-copy { font-size: 10px; color: var(--dim); font-weight: 400; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-center, .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 80px 28px 50px; border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-right { min-height: 300px; }
+    .expect-inner { padding: 60px 24px; }
+    .expect-grid { grid-template-columns: 1fr 1fr; }
+    .expect-card:nth-child(2) { border-right: none; }
+    .expect-card:nth-child(3), .expect-card:nth-child(4) { border-top: 1px solid var(--border-dark); }
+    .past-section { padding: 60px 24px; }
+    .past-grid { grid-template-columns: 1fr; }
+    .past-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .past-card:last-child { border-bottom: none; }
+    .locations { padding: 36px 24px; }
+    .locations-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .location-list { flex-direction: column; gap: 0; }
+    .location-item { border-right: none; border-bottom: 1px solid var(--border); padding: 14px 0; }
+    .location-item:last-child { border-bottom: none; }
+    .form-section { grid-template-columns: 1fr; margin: 40px 24px; padding: 0; }
+    .form-left { border-right: none; border-bottom: 1px solid var(--border-dark); padding: 40px 28px; }
+    .form-right { padding: 40px 28px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">mehndi by ameya</a>
+  <div class="nav-center">las vegas · chicago · champaign-urbana</div>
+  <ul class="nav-links">
+    <li><a href="gallery.html">gallery</a></li>
+    <li><a href="services.html">services</a></li>
+    <li><a href="popup.html" class="active">pop-ups</a></li>
+    <li><a href="about.html">about</a></li>
+    <li><a href="booking.html" class="nav-book">book</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="label">events & pop-ups</div>
+    <h1>bring mehndi<br>to your <em>event</em></h1>
+    <p>i set up, you show up. whether it's a diwali night, a campus market, or an rso event — i bring the henna, the setup, and the culture. inquire below and let's make it happen.</p>
+    <a href="#inquire" class="btn-primary">inquire now</a>
+  </div>
+  <div class="hero-right">
+    <img src="../images/popup-main.webp" alt="mehndi pop-up">
+  </div>
+</section>
+
+<!-- WHAT TO EXPECT -->
+<section class="expect-section">
+  <div class="expect-inner">
+    <div class="label-light">how it works</div>
+    <h2>what to <em>expect</em></h2>
+    <div class="expect-grid">
+      <div class="expect-card">
+        <div class="expect-num">01</div>
+        <div class="expect-title">inquire</div>
+        <p class="expect-desc">fill out the form below with your event details — date, location, expected attendance, and what you're celebrating. i'll get back to you within 48 hours.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-num">02</div>
+        <div class="expect-title">we plan together</div>
+        <p class="expect-desc">once we connect, we'll figure out the details — how long i'll be there, how many people i can serve, and what designs work best for your crowd and timeframe.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-num">03</div>
+        <div class="expect-title">i show up</div>
+        <p class="expect-desc">i bring everything — henna cones, jagua, setup, and the designs. all your guests need to do is sit down and pick what they want.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-num">04</div>
+        <div class="expect-title">your guests leave glowing</div>
+        <p class="expect-desc">every guest gets a custom piece and aftercare instructions. i make sure everyone knows how to care for their henna so they get the best stain possible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAST POP-UPS -->
+<section class="past-section">
+  <div class="label">past events</div>
+  <h2>where i've been</h2>
+
+  <!-- SPRING POP-UP -->
+  <div style="border:1px solid var(--border);margin-bottom:20px;">
+    <div style="padding:24px 36px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div class="past-tag">spring 2026 · local business pop-up</div>
+        <div class="past-name" style="margin-top:6px;">spring mehndi pop-up</div>
+      </div>
+      <p class="past-detail" style="max-width:400px;">an independent pop-up at a local business — i set up my own booth, set my own prices, and did custom henna for walk-in patrons.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-top:none;">
+      <div style="border-right:1px solid var(--border);">
+        <img src="../images/popup-spring.webp" alt="spring pop-up booth" style="width:100%;height:auto;display:block;">
+      </div>
+      <div>
+        <img src="../images/popup-spring-2.webp" alt="doing henna at spring pop-up" style="width:100%;height:auto;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- RSO EVENT -->
+  <div style="border:1px solid var(--border);margin-bottom:48px;">
+    <div style="padding:24px 36px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div class="past-tag">2025–2026 · rso event</div>
+        <div class="past-name" style="margin-top:6px;">rso hosted event</div>
+      </div>
+      <p class="past-detail" style="max-width:400px;">hired by a student org to host a henna booth — paid a set rate to provide custom mehndi for attendees as part of the experience.</p>
+    </div>
+    <div style="display:flex;justify-content:center;padding:32px;background:var(--warm);">
+      <div style="width:55%;height:320px;overflow:hidden;">
+        <img src="../images/popup-rso.webp" alt="doing henna at rso event" style="width:100%;height:100%;object-fit:cover;object-position:center 50%;display:block;">
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- LOCATIONS -->
+<div class="locations">
+  <div class="locations-inner">
+    <div class="locations-label">available in</div>
+    <div class="locations-divider"></div>
+    <div class="location-list">
+      <div class="location-item">
+        <div class="location-city">las vegas</div>
+        <div class="location-detail">hometown · available now<br>private events & parties</div>
+      </div>
+      <div class="location-item">
+        <div class="location-city">chicago</div>
+        <div class="location-detail">mid-june through july<br>pop-ups coming this summer</div>
+      </div>
+      <div class="location-item">
+        <div class="location-city">champaign-urbana</div>
+        <div class="location-detail">uiuc · from late august<br>rso events · campus markets</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- HOW WE WORK -->
+<section style="background:var(--brown);border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark);">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 48px;">
+    <div class="label-light">working together</div>
+    <h2 style="font-family:'Libre Baskerville',serif;font-size:clamp(28px,3.5vw,44px);font-style:italic;font-weight:400;color:var(--rust-light);margin-bottom:44px;line-height:1.1;">two ways to <em style="font-style:normal;color:var(--cream);">book me</em></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border-dark);">
+
+      <div style="padding:40px 36px;border-right:1px solid var(--border-dark);">
+        <div style="font-family:'Libre Baskerville',serif;font-size:11px;font-style:italic;color:var(--border-dark);margin-bottom:16px;">01</div>
+        <div style="font-family:'Libre Baskerville',serif;font-size:22px;font-style:italic;font-weight:400;color:var(--rust-light);margin-bottom:12px;">independent pop-up</div>
+        <p style="font-size:12px;color:rgba(250,247,242,0.45);line-height:1.9;font-weight:400;margin-bottom:20px;">i set up my own booth at your business, market, or venue. i set my own prices and guests pay me directly — no cost to you. great for local businesses, markets, and community events looking to add a unique experience for their customers.</p>
+        <div style="font-size:10px;letter-spacing:0.1em;color:rgba(250,247,242,0.3);line-height:2;">
+          — no upfront cost to the host<br>
+          — guests pay per design<br>
+          — great for markets & local businesses<br>
+          — flexible on duration and setup
+        </div>
+      </div>
+
+      <div style="padding:40px 36px;">
+        <div style="font-family:'Libre Baskerville',serif;font-size:11px;font-style:italic;color:var(--border-dark);margin-bottom:16px;">02</div>
+        <div style="font-family:'Libre Baskerville',serif;font-size:22px;font-style:italic;font-weight:400;color:var(--rust-light);margin-bottom:12px;">rso & org hired event</div>
+        <p style="font-size:12px;color:rgba(250,247,242,0.45);line-height:1.9;font-weight:400;margin-bottom:20px;">your org pays a set rate for me to host a henna booth at your event — guests get mehndi as part of the experience at no extra cost to them. perfect for cultural celebrations, welcome events, and student org gatherings.</p>
+        <div style="font-size:10px;letter-spacing:0.1em;color:rgba(250,247,242,0.3);line-height:2;">
+          — flat rate paid by the org<br>
+          — free for attendees<br>
+          — great for rso events & celebrations<br>
+          — pricing discussed after inquiry
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INQUIRY FORM -->
+<div id="inquire" style="max-width:1200px;margin:80px auto;padding:0 48px;">
+  <div class="form-section" style="margin:0;padding:0;">
+    <div class="form-left">
+      <div class="label-light">get in touch</div>
+      <h2>let's plan your <em>event</em></h2>
+      <p>tell me about your event and i'll get back to you within 48 hours. pricing is discussed after we connect — it depends on the size of your event, location, and duration.</p>
+      <div class="form-details">
+        <span>— rso & student org events</span>
+        <span>— cultural celebrations</span>
+        <span>— campus markets & pop-ups</span>
+        <span>— private parties & mehendi nights</span>
+        <span>— chicago pop-ups this summer</span>
+      </div>
+    </div>
+    <div class="form-right">
+      <form id="popup-form" action="https://formspree.io/f/xpqnejpy" method="POST">
+
+        <div class="form-group">
+          <label for="name">your name</label>
+          <input type="text" id="name" name="name" placeholder="full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="org">organization or event name</label>
+          <input type="text" id="org" name="organization" placeholder="rso name, company, or event title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="event-type">event type</label>
+          <select id="event-type" name="event_type" required>
+            <option value="" disabled selected>select an event type</option>
+            <option value="rso-event">rso / student org event</option>
+            <option value="cultural-celebration">cultural celebration (diwali, eid, etc.)</option>
+            <option value="campus-market">campus market or pop-up</option>
+            <option value="private-party">private party or mehendi night</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="event-date">event date</label>
+          <input type="date" id="event-date" name="event_date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="location">event location / city</label>
+          <input type="text" id="location" name="location" placeholder="city, venue, or address" required>
+        </div>
+
+        <div class="form-group">
+          <label for="attendance">expected attendance</label>
+          <input type="number" id="attendance" name="expected_attendance" placeholder="approx. number of guests" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">anything else i should know?</label>
+          <textarea id="message" name="message" placeholder="theme, budget, timing, special requests..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">send inquiry</button>
+        <p class="form-note">i'll respond within 48 hours.</p>
+
+        <div class="success-msg" id="success-msg">
+          <p>✓ &nbsp;thank you! i'll be in touch within 48 hours to discuss your event.</p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="../index.html" class="footer-logo">mehndi by ameya</a>
+  <ul class="footer-links">
+    <li><a href="gallery.html">gallery</a></li>
+    <li><a href="services.html">services</a></li>
+    <li><a href="popup.html">pop-ups</a></li>
+    <li><a href="about.html">about</a></li>
+    <li><a href="booking.html">book</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 mehndi by ameya</p>
+</footer>
+
+<script>
+  const form = document.getElementById('popup-form');
+  const successMsg = document.getElementById('success-msg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST', body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.reset();
+        successMsg.style.display = 'block';
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        alert('something went wrong. please try again or dm me directly.');
+      }
+    } catch {
+      alert('network error. please check your connection and try again.');
+    }
+  });
+
+  const dateInput = document.getElementById('event-date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.setAttribute('min', today);
+</script>
+
+</body>
+</html>
